@@ -15,6 +15,8 @@ The other party's payoffs are kept private.
 
 from __future__ import annotations
 
+import math
+
 from typing import Any
 
 from negmas.sao import SAOState
@@ -173,3 +175,19 @@ class RulesOnlyNegotiator(VLLMNegotiator):
         data = state.current_data or {}
         text = data.get("text") if isinstance(data, dict) else None
         return f'The other party\'s message: "{text}"\n' if text else ""
+    
+    def on_preferences_changed(self, changes):
+        try:
+            super().on_preferences_changed(changes)
+        except Exception:
+            import traceback
+            traceback.print_exc()
+            raise
+    
+    def on_negotiation_start(self, state):
+        try:
+            super().on_negotiation_start(state)
+        except Exception:
+            import traceback
+            traceback.print_exc()
+            raise
